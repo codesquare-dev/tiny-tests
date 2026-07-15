@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# data pipeline raw source cache (large, re-downloadable)
+scripts/.cache/
