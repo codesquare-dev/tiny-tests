@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "og": "tsx scripts/generate-og.tsx"
+    "og": "tsx scripts/generate-og.tsx",
+    "deploy": "pnpm og && pnpm build && gh-pages -d out -t"
   },
   "dependencies": {
     "next": "16.2.10",
@@ -25,6 +26,7 @@
     "@vitejs/plugin-react": "^6.0.3",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "gh-pages": "^6.3.0",
     "jsdom": "^29.1.1",
     "satori": "^0.28.0",
     "tailwindcss": "^4",
