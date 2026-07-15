@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IncomeForm } from "@/components/IncomeForm";
+import { AdSlot } from "@/components/AdSlot";
 
 export const metadata: Metadata = {
   title: "How Rich Am I? Global Income Percentile Calculator",
@@ -17,6 +18,7 @@ export default function Page() {
         </p>
       </div>
       <IncomeForm />
+      <AdSlot slot="result" />
       <section className="flex flex-col gap-2 border-t border-black/10 pt-8 text-sm text-zinc-600 dark:border-white/15 dark:text-zinc-400">
         <h2 className="text-base font-semibold text-foreground">How this calculator works</h2>
         <p>
@@ -25,6 +27,7 @@ export default function Page() {
           incomes are equivalised by the square root of household size. All calculations run
           in your browser — nothing is uploaded.
         </p>
+        <AdSlot slot="methodology" />
       </section>
     </main>
   );
