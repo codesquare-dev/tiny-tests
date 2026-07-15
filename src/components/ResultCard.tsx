@@ -1,5 +1,6 @@
 import { peopleBelow } from "@/lib/percentile";
 import type { Verdict } from "./IncomeForm";
+import { NextTests } from "./NextTests";
 
 export function ResultCard({ verdict }: { verdict: Verdict }) {
   const shareUrl = `/income-percentile/r/${verdict.globalPercentile}/`;
@@ -32,6 +33,7 @@ export function ResultCard({ verdict }: { verdict: Verdict }) {
           Copy link
         </button>
       </div>
+      <NextTests excludeHref="/income-percentile/" />
     </section>
   );
 }
