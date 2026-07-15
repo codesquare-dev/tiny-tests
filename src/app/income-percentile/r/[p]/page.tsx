@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { peopleBelow } from "@/lib/percentile";
+import { SITE_URL } from "@/lib/site";
 
 type Params = Promise<{ p: string }>;
 
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title,
     description: "Find out where your income stands among 8 billion people.",
-    openGraph: { title, images: [`/og/p${p}.png`] },
+    openGraph: { title, images: [`${SITE_URL}/og/p${p}.png`] },
     twitter: { card: "summary_large_image" },
   };
 }

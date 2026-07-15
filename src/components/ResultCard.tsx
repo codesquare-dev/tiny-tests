@@ -1,9 +1,10 @@
 import { peopleBelow } from "@/lib/percentile";
+import { SITE_URL } from "@/lib/site";
 import type { Verdict } from "./IncomeForm";
 import { NextTests } from "./NextTests";
 
 export function ResultCard({ verdict }: { verdict: Verdict }) {
-  const shareUrl = `/income-percentile/r/${verdict.globalPercentile}/`;
+  const shareUrl = `${SITE_URL}/income-percentile/r/${verdict.globalPercentile}/`;
   const billions = (peopleBelow(verdict.globalPercentile) / 1e9).toFixed(1);
   return (
     <section aria-label="result" className="mt-8 flex flex-col gap-3 rounded-xl border border-black/10 p-6 dark:border-white/15">
@@ -28,7 +29,7 @@ export function ResultCard({ verdict }: { verdict: Verdict }) {
         <button
           type="button"
           className="rounded-full border border-black/10 px-4 py-2 text-sm font-medium hover:bg-black/[.04] dark:border-white/15 dark:hover:bg-white/[.08]"
-          onClick={() => navigator.clipboard.writeText(new URL(shareUrl, location.origin).href)}
+          onClick={() => navigator.clipboard.writeText(shareUrl)}
         >
           Copy link
         </button>
