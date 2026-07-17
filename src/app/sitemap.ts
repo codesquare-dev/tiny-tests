@@ -10,5 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/income-percentile/` },
     { url: `${base}/reaction-time/` },
     { url: `${base}/methodology/` },
+    { url: `${base}/about/` },
+    { url: `${base}/privacy/` },
   ];
 }

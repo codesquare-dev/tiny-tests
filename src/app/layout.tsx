@@ -74,6 +74,15 @@ function Footer() {
           Figures are estimates from household surveys, not financial advice.
           Everything is calculated in your browser.
         </p>
+        <p className="mt-4 text-sm text-ink-muted">
+          <Link href="/about/" className="text-ink underline decoration-rule-strong underline-offset-2 hover:decoration-accent">
+            About
+          </Link>
+          {" · "}
+          <Link href="/privacy/" className="text-ink underline decoration-rule-strong underline-offset-2 hover:decoration-accent">
+            Privacy
+          </Link>
+        </p>
       </div>
     </footer>
   );
