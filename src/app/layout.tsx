@@ -111,6 +111,12 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
         )}
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "1315654a2ead4ef19ed952e964bb1d69"}'
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
