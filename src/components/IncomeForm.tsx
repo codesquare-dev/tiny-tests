@@ -1,13 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import countries from "../../data/countries.json";
 import global from "../../data/global.json";
+import { detectCountry } from "@/lib/locale";
+import { reformatIncomeInput } from "@/lib/incomeFormat";
 import { lookupPercentile, perCapita, toIntlDollars } from "@/lib/percentile";
 import type { CountryData, GlobalData } from "@/lib/types";
 import { ResultCard } from "./ResultCard";
 
 const countryList = countries as CountryData[];
 const globalData = global as GlobalData;
+const validCountryCodes = new Set(countryList.map((c) => c.code));
 
 export type Verdict = {
   globalPercentile: number;
@@ -20,15 +23,45 @@ export type Verdict = {
 
 export function IncomeForm() {
   const [code, setCode] = useState("USA");
-  const [income, setIncome] = useState("");
+  const [incomeDigits, setIncomeDigits] = useState("");
+  const [incomeDisplay, setIncomeDisplay] = useState("");
   const [household, setHousehold] = useState(1);
   const [verdict, setVerdict] = useState<Verdict | null>(null);
 
+  const userPickedCountry = useRef(false);
+  const incomeInputRef = useRef<HTMLInputElement>(null);
+  const pendingCursorPos = useRef<number | null>(null);
+
+  // Detect country from the browser locale after mount only — the initial
+  // render must stay "USA" on both server and client to avoid a hydration
+  // mismatch, and must not override a country the user already picked.
+  useEffect(() => {
+    if (userPickedCountry.current) return;
+    setCode(detectCountry(navigator.languages ?? [navigator.language], validCountryCodes));
+  }, []);
+
+  useLayoutEffect(() => {
+    if (pendingCursorPos.current === null || !incomeInputRef.current) return;
+    incomeInputRef.current.setSelectionRange(pendingCursorPos.current, pendingCursorPos.current);
+    pendingCursorPos.current = null;
+  }, [incomeDisplay]);
+
   const country = countryList.find((c) => c.code === code)!;
+
+  function handleIncomeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const input = e.target;
+    const { digits, formatted, cursorPos } = reformatIncomeInput(
+      input.value,
+      input.selectionStart ?? input.value.length,
+    );
+    setIncomeDigits(digits);
+    setIncomeDisplay(formatted);
+    pendingCursorPos.current = cursorPos;
+  }
 
   function calculate(e: React.SubmitEvent) {
     e.preventDefault();
-    const amount = Number(income.replaceAll(",", ""));
+    const amount = Number(incomeDigits);
     if (!Number.isFinite(amount) || amount <= 0) return;
     const intl = toIntlDollars(perCapita(amount, household), country.pppFactor);
     setVerdict({
@@ -51,7 +84,10 @@ export function IncomeForm() {
             Country
             <select
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={(e) => {
+                userPickedCountry.current = true;
+                setCode(e.target.value);
+              }}
               className="field"
             >
               {countryList.map((c) => (
@@ -78,9 +114,10 @@ export function IncomeForm() {
           <label className="flex flex-col gap-1.5 text-sm font-medium sm:col-span-2">
             Yearly income ({country.currency}, before tax)
             <input
+              ref={incomeInputRef}
               inputMode="numeric"
-              value={income}
-              onChange={(e) => setIncome(e.target.value)}
+              value={incomeDisplay}
+              onChange={handleIncomeChange}
               placeholder="e.g. 60,000"
               className="field"
             />
