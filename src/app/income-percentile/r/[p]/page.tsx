@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { peopleBelow } from "@/lib/percentile";
+import { rarityOutOf100 } from "@/lib/percentile";
 import { SITE_URL } from "@/lib/site";
 
 type Params = Promise<{ p: string }>;
@@ -24,7 +24,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function SharePage({ params }: { params: Params }) {
   const { p: pParam } = await params;
   const p = Number(pParam);
-  const billions = (peopleBelow(p) / 1e9).toFixed(1);
+  // Report the smaller side so the extremes stay honest: at p99, "8.0 billion
+  // people earn less" is indistinguishable from the whole world (8.1bn).
+  const { side, outOf100 } = rarityOutOf100(p);
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
       <p className="label">Global income · World Bank PIP</p>
@@ -33,7 +35,9 @@ export default async function SharePage({ params }: { params: Params }) {
         <span className="text-accent">{p}%</span> of the world
       </h1>
       <p className="mt-4 text-lg leading-relaxed text-ink-muted tabular-nums">
-        That is about {billions} billion people. Where do you stand?
+        About {outOf100} in 100 people worldwide{" "}
+        {side === "above" ? "earn more" : "earn less"} than this person. Where do
+        you stand?
       </p>
       <Link
         href="/income-percentile/"
