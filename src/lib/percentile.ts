@@ -21,3 +21,37 @@ export function lookupPercentile(intlIncome: number, thresholds: number[]): numb
 export function peopleBelow(percentile: number, worldPopulation = 8_100_000_000): number {
   return Math.round(worldPopulation * (percentile / 100));
 }
+
+const THRESHOLD_COUNT = 99;
+
+/** The p50 threshold — the median of a 99-length percentile threshold array. */
+export function median(thresholds: number[]): number {
+  if (thresholds.length !== THRESHOLD_COUNT) {
+    throw new Error(`expected ${THRESHOLD_COUNT} thresholds, got ${thresholds.length}`);
+  }
+  return thresholds[49];
+}
+
+/** "2.1×" — one decimal, for "N× the median income in X" copy. */
+export function formatMultiple(value: number): string {
+  if (value < 0.05) return "<0.1×";
+  return `${value.toFixed(1)}×`;
+}
+
+export type Rarity = { side: "above" | "below"; outOf100: number };
+
+/**
+ * Picks the honest side of the "n in 100 people" framing.
+ *
+ * Reporting the larger side saturates at the extremes: at p99, "8.0 billion
+ * people earn less than you" is indistinguishable from the whole world (8.1bn)
+ * and reads as though nobody out-earns the user. Reporting the *smaller* side
+ * never saturates — at p99 it becomes "1 in 100 people earn more than you",
+ * which is both accurate and legible.
+ */
+export function rarityOutOf100(percentile: number): Rarity {
+  const above = 100 - percentile;
+  return above <= percentile
+    ? { side: "above", outOf100: above }
+    : { side: "below", outOf100: percentile };
+}

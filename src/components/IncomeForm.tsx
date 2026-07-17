@@ -12,7 +12,10 @@ const globalData = global as GlobalData;
 export type Verdict = {
   globalPercentile: number;
   countryPercentile: number;
+  countryCode: string;
   countryName: string;
+  /** Per-capita yearly income in international dollars — the value both curves are read against. */
+  intlIncome: number;
 };
 
 export function IncomeForm() {
@@ -31,7 +34,9 @@ export function IncomeForm() {
     setVerdict({
       globalPercentile: lookupPercentile(intl, globalData.percentiles),
       countryPercentile: lookupPercentile(intl, country.percentiles),
+      countryCode: country.code,
       countryName: country.name,
+      intlIncome: intl,
     });
   }
 
