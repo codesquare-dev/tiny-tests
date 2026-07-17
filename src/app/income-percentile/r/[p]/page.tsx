@@ -26,15 +26,20 @@ export default async function SharePage({ params }: { params: Params }) {
   const p = Number(pParam);
   const billions = (peopleBelow(p) / 1e9).toFixed(1);
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-4 px-6 py-16">
-      <h1 className="text-3xl font-bold tracking-tight">
-        This person earns more than {p}% of the world
+    <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
+      <p className="label">Global income · World Bank PIP</p>
+      <h1 className="mt-3 max-w-prose font-display text-4xl leading-[1.1] tracking-tight tabular-nums sm:text-5xl">
+        This person earns more than{" "}
+        <span className="text-accent">{p}%</span> of the world
       </h1>
-      <p className="text-zinc-600 dark:text-zinc-400">
+      <p className="mt-4 text-lg leading-relaxed text-ink-muted tabular-nums">
         That is about {billions} billion people. Where do you stand?
       </p>
-      <Link href="/income-percentile/" className="font-medium underline">
-        Calculate yours →
+      <Link
+        href="/income-percentile/"
+        className="mt-8 inline-block rounded-sm bg-accent px-5 py-3 font-medium text-paper hover:bg-accent-deep"
+      >
+        Calculate yours
       </Link>
     </main>
   );

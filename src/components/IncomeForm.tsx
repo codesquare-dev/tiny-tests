@@ -37,50 +37,55 @@ export function IncomeForm() {
 
   return (
     <div>
-      <form onSubmit={calculate} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Country
-          <select
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="rounded-lg border border-black/10 px-3 py-2 dark:border-white/15 dark:bg-black"
-          >
-            {countryList.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Yearly income ({country.currency}, before tax)
-          <input
-            inputMode="numeric"
-            value={income}
-            onChange={(e) => setIncome(e.target.value)}
-            placeholder="e.g. 60,000"
-            className="rounded-lg border border-black/10 px-3 py-2 dark:border-white/15 dark:bg-black"
-          />
-        </label>
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Household size
-          <select
-            value={household}
-            onChange={(e) => setHousehold(Number(e.target.value))}
-            className="rounded-lg border border-black/10 px-3 py-2 dark:border-white/15 dark:bg-black"
-          >
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </label>
+      <form
+        onSubmit={calculate}
+        className="mt-8 rounded-sm border border-rule bg-paper-raised p-5 sm:p-6"
+      >
+        <div className="grid gap-5 sm:grid-cols-2">
+          <label className="flex flex-col gap-1.5 text-sm font-medium">
+            Country
+            <select
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              className="field"
+            >
+              {countryList.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="flex flex-col gap-1.5 text-sm font-medium">
+            Household size
+            <select
+              value={household}
+              onChange={(e) => setHousehold(Number(e.target.value))}
+              className="field"
+            >
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="flex flex-col gap-1.5 text-sm font-medium sm:col-span-2">
+            Yearly income ({country.currency}, before tax)
+            <input
+              inputMode="numeric"
+              value={income}
+              onChange={(e) => setIncome(e.target.value)}
+              placeholder="e.g. 60,000"
+              className="field"
+            />
+          </label>
+        </div>
         <button
           type="submit"
-          className="rounded-full bg-foreground px-5 py-3 font-medium text-background hover:bg-[#383838] dark:hover:bg-[#ccc]"
+          className="mt-6 w-full rounded-sm bg-accent px-5 py-3 font-medium text-paper hover:bg-accent-deep sm:w-auto"
         >
-          How rich am I?
+          Show my percentile
         </button>
       </form>
       {verdict && <ResultCard verdict={verdict} />}

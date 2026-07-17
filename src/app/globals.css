@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
+/* Design tokens — a small data publication: warm paper, ink, hairline rules,
+   and a single claret accent reserved for emphasis and (later) chart series. */
+@theme {
+  --color-paper: #f6f2ea;
+  --color-paper-raised: #fdfbf6;
+  --color-ink: #16150f;
+  --color-ink-muted: #5c594e;
+  --color-rule: #ddd7c9;
+  --color-rule-strong: #a9a292;
+  --color-accent: #8c2333;
+  --color-accent-deep: #71182a;
+
+  --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Eyebrow / dateline label — the publication's utility voice. */
+@utility label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Shared form control: hairline box on raised paper. */
+@utility field {
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid var(--color-rule-strong);
+  background-color: var(--color-paper-raised);
+  padding: 0.625rem 0.75rem;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
 }
