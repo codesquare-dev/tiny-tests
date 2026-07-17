@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Methodology & Sources — How Rich Am I?",
+  title: "Methodology & Sources — TinyTests",
   description:
-    "Where the income percentile data comes from, how it's calculated, and what it can't tell you.",
+    "Where each test's data comes from, how it's calculated, and what it can't tell you.",
 };
 
 export default function Page() {
@@ -15,8 +15,8 @@ export default function Page() {
         Methodology &amp; sources
       </h1>
       <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-muted">
-        How the income percentile calculator works, where its data comes from,
-        and where it falls short.
+        How each test works, where its data comes from, and where it falls
+        short.
       </p>
 
       <section className="mt-12 border-t border-ink pt-6">
@@ -41,6 +41,12 @@ export default function Page() {
             <span className="font-medium text-ink">world-countries</span>{" "}
             (mledoze/countries) — used only to look up each country&apos;s
             currency code. ODbL-1.0.
+          </li>
+          <li className="py-4 text-sm leading-relaxed text-ink-muted">
+            <span className="font-medium text-ink">Human Benchmark</span> — the
+            published median reaction time (273 ms) that the reaction-time
+            curve is anchored to. Reported statistic only; we hold none of the
+            underlying data.
           </li>
         </ul>
       </section>
@@ -107,6 +113,37 @@ export default function Page() {
             countries, not all in the same year.
           </li>
         </ul>
+      </section>
+
+      <section className="mt-10 border-t border-rule pt-6">
+        <h2 className="font-display text-2xl tracking-tight">Reaction time</h2>
+        <p className="mt-3 max-w-prose leading-relaxed text-ink-muted">
+          The reaction-time percentile is an approximation, not a measurement
+          against a dataset of our own. Your five valid trials are averaged and
+          placed on a log-normal curve — the shape reaction times are
+          conventionally modelled with — centred on the 273 ms median that{" "}
+          <a
+            href="https://humanbenchmark.com/tests/reactiontime/statistics"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-ink underline decoration-rule-strong underline-offset-2 hover:decoration-accent"
+          >
+            Human Benchmark publishes
+          </a>{" "}
+          from its own sample. That sample is large but self-selected: it is
+          people who chose to take a reaction test, not a random draw of
+          humanity.
+        </p>
+        <p className="mt-3 max-w-prose leading-relaxed text-ink-muted">
+          Human Benchmark publishes no standard deviation, so the curve&apos;s
+          spread (sigma = 0.30) is fitted so that roughly 200 ms lands near the
+          top decile and roughly 350 ms near the bottom quartile — landmarks read
+          off the same published histogram. Real reaction times are more skewed
+          than a pure log-normal, so treat the number as a placement rather than
+          a precise rank. Your equipment counts too: a wireless mouse and a
+          slow display can add tens of milliseconds that have nothing to do with
+          you.
+        </p>
       </section>
 
       <Link

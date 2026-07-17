@@ -7,6 +7,12 @@ export const TESTS = [
     blurb: "Your place among 8 billion people",
     dateline: "World Bank PIP · 2021 PPP · 162 countries",
   },
+  {
+    href: "/reaction-time/",
+    title: "How Fast Are You?",
+    blurb: "Five clicks against the clock",
+    dateline: "Human Benchmark · 273 ms median · log-normal approximation",
+  },
 ];
 
 export function NextTests({ excludeHref }: { excludeHref?: string }) {
