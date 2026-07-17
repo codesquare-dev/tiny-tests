@@ -3,7 +3,6 @@ import {
   formatMultiple,
   lookupPercentile,
   median,
-  peopleBelow,
   perCapita,
   rarityOutOf100,
   toIntlDollars,
@@ -31,10 +30,6 @@ describe("소득 백분위 계산 코어", () => {
 
   it("마지막_임계값보다_높으면_백분위_99로_고정한다", () => {
     expect(lookupPercentile(1_000_000, thresholds)).toBe(99);
-  });
-
-  it("백분위로부터_그보다_적게_버는_세계_인구수를_계산한다", () => {
-    expect(peopleBelow(91)).toBe(Math.round(8_100_000_000 * 0.91));
   });
 
   it("중위값으로_50번째_백분위_임계값을_반환한다", () => {

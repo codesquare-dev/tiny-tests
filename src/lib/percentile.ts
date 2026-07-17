@@ -18,10 +18,6 @@ export function lookupPercentile(intlIncome: number, thresholds: number[]): numb
   return percentile;
 }
 
-export function peopleBelow(percentile: number, worldPopulation = 8_100_000_000): number {
-  return Math.round(worldPopulation * (percentile / 100));
-}
-
 const THRESHOLD_COUNT = 99;
 
 /** The p50 threshold — the median of a 99-length percentile threshold array. */
