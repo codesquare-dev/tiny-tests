@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { peopleBelow } from "@/lib/percentile";
 import { SITE_URL } from "@/lib/site";
 import type { Verdict } from "./IncomeForm";
@@ -34,6 +35,12 @@ export function ResultCard({ verdict }: { verdict: Verdict }) {
           Copy link
         </button>
       </div>
+      <p className="text-xs text-zinc-500 dark:text-zinc-500">
+        Source: World Bank PIP (2021 PPP) —{" "}
+        <Link href="/methodology/" className="underline hover:no-underline">
+          Methodology &amp; sources
+        </Link>
+      </p>
       <NextTests excludeHref="/income-percentile/" />
     </section>
   );

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { IncomeForm } from "@/components/IncomeForm";
 import { AdSlot } from "@/components/AdSlot";
 
@@ -27,6 +28,11 @@ export default function Page() {
           incomes are divided equally among household members (per-capita), matching the World
           Bank per-capita income distribution. All calculations run in your browser — nothing is
           uploaded.
+        </p>
+        <p>
+          <Link href="/methodology/" className="underline hover:no-underline">
+            Methodology &amp; sources
+          </Link>
         </p>
         <AdSlot slot="methodology" />
       </section>
