@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { equivalise, lookupPercentile, peopleBelow, toIntlDollars } from "./percentile";
+import { lookupPercentile, peopleBelow, perCapita, toIntlDollars } from "./percentile";
 
 describe("소득 백분위 계산 코어", () => {
   const thresholds = Array.from({ length: 99 }, (_, i) => (i + 1) * 1000); // p1=1000 ... p99=99000
@@ -8,9 +8,9 @@ describe("소득 백분위 계산 코어", () => {
     expect(toIntlDollars(1300, 1300)).toBe(1); // 1300 LCU, factor 1300 → 1 intl$
   });
 
-  it("가구원수의_제곱근으로_소득을_균등화한다", () => {
-    expect(equivalise(40000, 4)).toBe(20000);
-    expect(equivalise(40000, 1)).toBe(40000);
+  it("가구원수로_소득을_1인당으로_나눈다", () => {
+    expect(perCapita(40000, 4)).toBe(10000);
+    expect(perCapita(40000, 1)).toBe(40000);
   });
 
   it("소득을_초과하지_않는_가장_높은_임계값의_백분위를_반환한다", () => {

@@ -24,8 +24,9 @@ export default function Page() {
         <p>
           Percentile thresholds come from the World Bank Poverty and Inequality Platform.
           Incomes are converted to 2021 international dollars using PPP factors, and household
-          incomes are equivalised by the square root of household size. All calculations run
-          in your browser — nothing is uploaded.
+          incomes are divided equally among household members (per-capita), matching the World
+          Bank per-capita income distribution. All calculations run in your browser — nothing is
+          uploaded.
         </p>
         <AdSlot slot="methodology" />
       </section>

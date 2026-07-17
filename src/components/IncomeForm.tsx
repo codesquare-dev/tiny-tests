@@ -2,7 +2,7 @@
 import { useState } from "react";
 import countries from "../../data/countries.json";
 import global from "../../data/global.json";
-import { equivalise, lookupPercentile, toIntlDollars } from "@/lib/percentile";
+import { lookupPercentile, perCapita, toIntlDollars } from "@/lib/percentile";
 import type { CountryData, GlobalData } from "@/lib/types";
 import { ResultCard } from "./ResultCard";
 
@@ -27,7 +27,7 @@ export function IncomeForm() {
     e.preventDefault();
     const amount = Number(income.replaceAll(",", ""));
     if (!Number.isFinite(amount) || amount <= 0) return;
-    const intl = toIntlDollars(equivalise(amount, household), country.pppFactor);
+    const intl = toIntlDollars(perCapita(amount, household), country.pppFactor);
     setVerdict({
       globalPercentile: lookupPercentile(intl, globalData.percentiles),
       countryPercentile: lookupPercentile(intl, country.percentiles),

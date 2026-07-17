@@ -13,7 +13,7 @@ size — see where you stand among 8 billion people, both globally and within yo
 country.
 
 - Percentile thresholds come from the [World Bank Poverty and Inequality Platform](https://pip.worldbank.org/) (CC0), pooled across 162 countries.
-- Incomes are converted to 2021 international dollars using PPP factors, and equivalised by the square root of household size.
+- Incomes are converted to 2021 international dollars using PPP factors, and divided equally among household members (per-capita), matching the World Bank per-capita income distribution.
 - Every calculation runs in the browser — nothing is uploaded.
 - Results are shareable: each percentile (1–99) has its own pre-rendered page and social card image.
 

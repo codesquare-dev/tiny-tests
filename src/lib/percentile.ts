@@ -2,8 +2,12 @@ export function toIntlDollars(amount: number, pppFactor: number): number {
   return amount / pppFactor;
 }
 
-export function equivalise(income: number, householdSize: number): number {
-  return income / Math.sqrt(householdSize);
+/**
+ * Converts household income to per-capita income, matching the World Bank
+ * PIP per-capita income distribution used for the percentile thresholds.
+ */
+export function perCapita(income: number, householdSize: number): number {
+  return income / householdSize;
 }
 
 export function lookupPercentile(intlIncome: number, thresholds: number[]): number {
