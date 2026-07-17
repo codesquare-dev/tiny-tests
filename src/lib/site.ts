@@ -1,4 +1,3 @@
-// GitHub Pages project site — served under /tiny-tests, not the domain root.
-// next/link auto-prefixes basePath, but raw URL strings (OG image URLs,
-// sitemap, robots.txt) don't, so they must reference this explicitly.
-export const SITE_URL = "https://codesquare-dev.github.io/tiny-tests";
+// Canonical site URL used in absolute links (OG image URLs, sitemap,
+// robots.txt) — next/link handles relative paths, but raw URL strings don't.
+export const SITE_URL = "https://tiny-tests.pages.dev";

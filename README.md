@@ -2,7 +2,7 @@
 
 Tiny tests you can finish in 30 seconds.
 
-**Live**: https://codesquare-dev.github.io/tiny-tests/
+**Live**: https://tiny-tests.pages.dev/
 
 ## What's here
 
@@ -22,7 +22,7 @@ More tests may get added here over time — see `NextTests` on the home page.
 ## Tech stack
 
 Next.js (App Router, static export), TypeScript, Tailwind CSS, Vitest. No server runtime —
-the whole site is pre-rendered static HTML/JSON, deployed to GitHub Pages.
+the whole site is pre-rendered static HTML/JSON, deployed to Cloudflare Pages.
 
 ## Development
 
@@ -45,9 +45,10 @@ pnpm og                          # regenerates public/og/p{1..99}.png (satori)
 ## Deploy
 
 ```bash
-pnpm deploy       # build + push out/ to the gh-pages branch
+pnpm deploy       # build + wrangler pages deploy out/
 ```
 
-GitHub Pages serves from the `gh-pages` branch. `next.config.ts` sets `basePath: "/tiny-tests"`
-to match the project-site URL; see `src/lib/site.ts` for the canonical site URL used in
-absolute links (OG images, share URLs, sitemap).
+Cloudflare Pages serves the static `out/` directory (`wrangler pages deploy`). Credentials
+live in `.env.deploy` (git-ignored): `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
+See `src/lib/site.ts` for the canonical site URL used in absolute links (OG images,
+share URLs, sitemap).
