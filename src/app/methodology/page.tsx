@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Methodology & Sources — TinyTests",
+  title: "Methodology & Sources — Out of 100",
   description:
     "Where each test's data comes from, how it's calculated, and what it can't tell you.",
 };

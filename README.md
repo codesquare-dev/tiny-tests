@@ -1,4 +1,4 @@
-# TinyTests
+# Out of 100
 
 Tiny tests you can finish in 30 seconds.
 

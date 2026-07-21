@@ -21,7 +21,7 @@ const plexSans = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "TinyTests",
+  title: "Out of 100",
   description: "Tiny tests you can finish in 30 seconds.",
 };
 
@@ -34,7 +34,7 @@ function Masthead() {
             href="/"
             className="font-display text-2xl font-semibold tracking-tight text-ink"
           >
-            TinyTests
+            Out of 100
           </Link>
           <span className="hidden text-sm text-ink-muted sm:flex sm:items-baseline sm:gap-3">
             <span aria-hidden className="inline-block h-3 w-px bg-accent" />

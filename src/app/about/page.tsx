@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About — TinyTests",
+  title: "About — Out of 100",
   description:
-    "What TinyTests is, how the numbers are sourced, and who's behind it.",
+    "What Out of 100 is, how the numbers are sourced, and who's behind it.",
 };
 
 export default function Page() {
@@ -12,7 +12,7 @@ export default function Page() {
     <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-12">
       <p className="label">About</p>
       <h1 className="mt-3 font-display text-4xl leading-[1.1] tracking-tight sm:text-5xl">
-        About TinyTests
+        About Out of 100
       </h1>
       <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-muted">
         Small tests you can finish in 30 seconds, with numbers traced back to
@@ -21,7 +21,7 @@ export default function Page() {
 
       <section className="mt-12 max-w-prose space-y-6 border-t border-ink pt-6 leading-relaxed text-ink-muted">
         <p>
-          TinyTests is a collection of short browser tests — where you stand
+          Out of 100 is a collection of short browser tests — where you stand
           on global income, how fast your reaction time is — that place a
           single number against a real distribution of other people. Nothing
           you enter is uploaded anywhere; every calculation runs on your own
@@ -62,7 +62,7 @@ export default function Page() {
         href="/"
         className="mt-10 inline-block rounded-sm border border-rule-strong px-4 py-2 text-sm font-medium hover:border-ink"
       >
-        Back to TinyTests
+        Back to Out of 100
       </Link>
     </main>
   );

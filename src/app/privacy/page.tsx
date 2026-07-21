@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy — TinyTests",
+  title: "Privacy — Out of 100",
   description:
-    "What TinyTests collects, what it doesn't, and how the site is hosted and served.",
+    "What Out of 100 collects, what it doesn't, and how the site is hosted and served.",
 };
 
 export default function Page() {
@@ -24,7 +24,7 @@ export default function Page() {
           What we don&apos;t collect
         </h2>
         <p className="mt-3 max-w-prose leading-relaxed text-ink-muted">
-          Every calculation on TinyTests runs in your browser. When you enter
+          Every calculation on Out of 100 runs in your browser. When you enter
           an income or run the reaction-time test, that number is never
           uploaded or sent to a server — we have no way to see it. There are
           no accounts, no sign-ups, and no forms that submit your data
@@ -54,7 +54,7 @@ export default function Page() {
       <section className="mt-10 border-t border-rule pt-6">
         <h2 className="font-display text-2xl tracking-tight">Advertising</h2>
         <p className="mt-3 max-w-prose leading-relaxed text-ink-muted">
-          TinyTests doesn&apos;t run ads today. If we introduce advertising, it
+          Out of 100 doesn&apos;t run ads today. If we introduce advertising, it
           would be through Google AdSense, which uses cookies — including
           from third-party vendors — to serve and measure ads. You&apos;d be able
           to read more and adjust your settings at Google&apos;s{" "}
@@ -102,7 +102,7 @@ export default function Page() {
         href="/"
         className="mt-10 inline-block rounded-sm border border-rule-strong px-4 py-2 text-sm font-medium hover:border-ink"
       >
-        Back to TinyTests
+        Back to Out of 100
       </Link>
     </main>
   );
