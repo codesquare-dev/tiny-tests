@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "og": "tsx scripts/generate-og.tsx",
-    "deploy": "pnpm og && pnpm build && wrangler pages deploy out --project-name tiny-tests"
+    "deploy": "pnpm og && pnpm build && wrangler pages deploy out --project-name outof100"
   },
   "dependencies": {
     "next": "16.2.10",

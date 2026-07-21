@@ -2,7 +2,7 @@
 
 Tiny tests you can finish in 30 seconds.
 
-**Live**: https://tiny-tests.pages.dev/
+**Live**: https://outof100.pages.dev/
 
 ## What's here
 
