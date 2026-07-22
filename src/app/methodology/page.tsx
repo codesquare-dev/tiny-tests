@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Methodology & Sources — Out of 100",
   description:
-    "Where each test's data comes from, how it's calculated, and what it can't tell you.",
+    "Where the data comes from, how it's calculated, and what it can't tell you.",
 };
 
 export default function Page() {
@@ -15,8 +15,8 @@ export default function Page() {
         Methodology &amp; sources
       </h1>
       <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-muted">
-        How each test works, where its data comes from, and where it falls
-        short.
+        How the calculator works, where its data comes from, and where it
+        falls short.
       </p>
 
       <section className="mt-12 border-t border-ink pt-6">

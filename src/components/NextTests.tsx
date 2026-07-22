@@ -11,6 +11,7 @@ export const TESTS = [
 
 export function NextTests({ excludeHref }: { excludeHref?: string }) {
   const items = TESTS.filter((t) => t.href !== excludeHref);
+  if (0 === items.length) return null;
   return (
     <section aria-label="more tests" className="border-t border-rule pt-6">
       <h2 className="label">Try another test</h2>
@@ -29,9 +30,6 @@ export function NextTests({ excludeHref }: { excludeHref?: string }) {
           </span>
         </Link>
       ))}
-      {items.length === 0 && (
-        <p className="mt-3 text-sm text-ink-muted">More tests coming soon.</p>
-      )}
     </section>
   );
 }
