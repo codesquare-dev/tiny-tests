@@ -22,7 +22,8 @@ const plexSans = IBM_Plex_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Out of 100",
-  description: "Tiny tests you can finish in 30 seconds.",
+  description:
+    "A global income percentile calculator — see where you stand among 8 billion people in about 30 seconds.",
 };
 
 function Masthead() {

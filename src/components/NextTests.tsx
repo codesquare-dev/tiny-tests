@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const TESTS = [
   {
     href: "/income-percentile/",
@@ -9,27 +7,11 @@ export const TESTS = [
   },
 ];
 
+/**
+ * With a single entry in TESTS, ResultCard's excludeHref always matches it —
+ * there is never another test left to point to.
+ */
 export function NextTests({ excludeHref }: { excludeHref?: string }) {
-  const items = TESTS.filter((t) => t.href !== excludeHref);
-  if (0 === items.length) return null;
-  return (
-    <section aria-label="more tests" className="border-t border-rule pt-6">
-      <h2 className="label">Try another test</h2>
-      {items.map((t) => (
-        <Link
-          key={t.href}
-          href={t.href}
-          className="mt-3 flex items-baseline justify-between gap-4 rounded-sm border border-rule bg-paper-raised px-4 py-3 hover:border-rule-strong"
-        >
-          <span>
-            <span className="font-display text-lg text-ink">{t.title}</span>
-            <span className="text-sm text-ink-muted"> — {t.blurb}</span>
-          </span>
-          <span aria-hidden className="text-accent">
-            →
-          </span>
-        </Link>
-      ))}
-    </section>
-  );
+  void excludeHref;
+  return null;
 }

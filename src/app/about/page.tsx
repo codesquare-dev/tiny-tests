@@ -15,8 +15,8 @@ export default function Page() {
         About Out of 100
       </h1>
       <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-muted">
-        Small tests you can finish in 30 seconds, with numbers traced back to
-        public datasets rather than made up.
+        A global income calculator you can finish in 30 seconds, with numbers
+        traced back to public datasets rather than made up.
       </p>
 
       <section className="mt-12 max-w-prose space-y-6 border-t border-ink pt-6 leading-relaxed text-ink-muted">

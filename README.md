@@ -1,6 +1,6 @@
 # Out of 100
 
-Tiny tests you can finish in 30 seconds.
+A global income percentile calculator you can finish in 30 seconds.
 
 **Live**: https://outof100.pages.dev/
 
@@ -16,8 +16,6 @@ country.
 - Incomes are converted to 2021 international dollars using PPP factors, and divided equally among household members (per-capita), matching the World Bank per-capita income distribution.
 - Every calculation runs in the browser — nothing is uploaded.
 - Results are shareable: each percentile (1–99) has its own pre-rendered page and social card image.
-
-More tests may get added here over time — see `NextTests` on the home page.
 
 ## Tech stack
 
