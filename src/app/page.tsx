@@ -9,8 +9,9 @@ export default function Home() {
         Where do you actually stand?
       </h1>
       <p className="mt-4 max-w-prose text-lg leading-relaxed text-ink-muted">
-        Each test takes about thirty seconds, runs entirely in your browser, and
-        traces every figure back to a public dataset you can go and check.
+        Enter your income and see exactly where it lands, out of 8 billion
+        people. It takes about thirty seconds, runs entirely in your browser,
+        and traces back to a public dataset you can go and check.
       </p>
 
       <ul className="mt-12 border-t border-ink">
@@ -35,11 +36,11 @@ export default function Home() {
         ))}
         <li className="border-b border-rule py-6 px-1">
           <p className="font-display text-2xl tracking-tight text-ink-muted">
-            The next test
+            Still being built
           </p>
           <p className="mt-1 text-ink-muted">
-            In preparation. Each one ships only once its dataset is public and
-            its method is written down.
+            More countries, more precision, more ways to compare — the plan is
+            to go deeper on this one number, not add another.
           </p>
         </li>
       </ul>

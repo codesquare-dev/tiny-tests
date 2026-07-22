@@ -38,7 +38,7 @@ function Masthead() {
           </Link>
           <span className="hidden text-sm text-ink-muted sm:flex sm:items-baseline sm:gap-3">
             <span aria-hidden className="inline-block h-3 w-px bg-accent" />
-            Small tests, real numbers.
+            Where you stand, in real numbers.
           </span>
         </div>
         <nav>

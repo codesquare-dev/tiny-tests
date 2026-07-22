@@ -21,11 +21,10 @@ export default function Page() {
 
       <section className="mt-12 max-w-prose space-y-6 border-t border-ink pt-6 leading-relaxed text-ink-muted">
         <p>
-          Out of 100 is a collection of short browser tests — where you stand
-          on global income, how fast your reaction time is — that place a
-          single number against a real distribution of other people. Nothing
-          you enter is uploaded anywhere; every calculation runs on your own
-          device.
+          Out of 100 is a global income percentile calculator — it places a
+          single number, your income, against a real distribution of other
+          people. Nothing you enter is uploaded anywhere; every calculation
+          runs on your own device.
         </p>
         <p>
           The editorial stance is that a number without a source is just a

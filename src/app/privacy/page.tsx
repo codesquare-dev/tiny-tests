@@ -25,10 +25,9 @@ export default function Page() {
         </h2>
         <p className="mt-3 max-w-prose leading-relaxed text-ink-muted">
           Every calculation on Out of 100 runs in your browser. When you enter
-          an income or run the reaction-time test, that number is never
-          uploaded or sent to a server — we have no way to see it. There are
-          no accounts, no sign-ups, and no forms that submit your data
-          anywhere.
+          an income, that number is never uploaded or sent to a server — we
+          have no way to see it. There are no accounts, no sign-ups, and no
+          forms that submit your data anywhere.
         </p>
       </section>
 
