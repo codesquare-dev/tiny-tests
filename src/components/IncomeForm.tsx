@@ -115,17 +115,29 @@ export function IncomeForm() {
                 </option>
               ))}
             </select>
+            <span className="text-xs font-normal text-ink-muted">
+              People this income supports — we split it evenly between them.
+            </span>
           </label>
           <label className="flex flex-col gap-1.5 text-sm font-medium sm:col-span-2">
-            Yearly income ({country.currency}, before tax)
-            <input
-              ref={incomeInputRef}
-              inputMode="numeric"
-              value={incomeDisplay}
-              onChange={handleIncomeChange}
-              placeholder="e.g. 60,000"
-              className="field"
-            />
+            Yearly income (before tax)
+            <div className="relative">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm font-medium text-ink-muted tabular-nums"
+              >
+                {country.currency}
+              </span>
+              <input
+                ref={incomeInputRef}
+                inputMode="numeric"
+                value={incomeDisplay}
+                onChange={handleIncomeChange}
+                placeholder="e.g. 60,000"
+                className="field pl-16"
+                aria-label={`Yearly income in ${country.currency}, before tax`}
+              />
+            </div>
           </label>
         </div>
         <button
