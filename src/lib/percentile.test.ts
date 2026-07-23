@@ -9,6 +9,7 @@ import {
   rarityOutOf100,
   toIntlDollars,
   zoomWindow,
+  zoomWindowCovering,
 } from "./percentile";
 
 describe("소득 백분위 계산 코어", () => {
@@ -126,6 +127,36 @@ describe("차트 확대 범위 (중심 백분위 ± 폭)", () => {
 
   it("기본_폭은_17이다", () => {
     expect(zoomWindow(50)).toEqual({ from: 33, to: 67 });
+  });
+});
+
+describe("두 지점을 모두 포함하는 확대 범위", () => {
+  it("두_백분위_모두_창_안에_들어온다_기본_사례", () => {
+    const { from, to } = zoomWindowCovering(86, 23);
+    expect(from).toBeLessThanOrEqual(23);
+    expect(to).toBeGreaterThanOrEqual(86);
+  });
+
+  it("두_백분위_모두_창_안에_들어온다_양끝_극단_사례", () => {
+    const { from, to } = zoomWindowCovering(99, 14);
+    expect(from).toBeLessThanOrEqual(14);
+    expect(to).toBeGreaterThanOrEqual(99);
+    expect(from).toBeGreaterThanOrEqual(1);
+    expect(to).toBeLessThanOrEqual(99);
+  });
+
+  it("두_지점이_같으면_기본_zoomWindow와_동일하다", () => {
+    expect(zoomWindowCovering(50, 50)).toEqual(zoomWindow(50, 17));
+  });
+
+  it("두_지점이_가까우면_기본_폭_17을_유지한다", () => {
+    const { from, to } = zoomWindowCovering(95, 97);
+    expect(to - from).toBe(34); // 2 * 기본 halfWidth(17)
+  });
+
+  it("두_지점이_멀면_둘_다_담기도록_폭을_넓힌다", () => {
+    const { from, to } = zoomWindowCovering(86, 23);
+    expect(to - from).toBeGreaterThan(34); // 기본 폭보다 넓어야 한다
   });
 });
 

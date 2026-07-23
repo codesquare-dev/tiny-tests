@@ -73,6 +73,24 @@ export function zoomWindow(
   return { from: Math.max(1, from), to: Math.min(99, to) };
 }
 
+/**
+ * A {@link zoomWindow} centered between `a` and `b`, widened as needed so
+ * both points stay inside the window (with a small margin). Never narrower
+ * than the default single-point window. Used when a chart must keep two
+ * markers — e.g. a global and a country percentile — both visible while
+ * zoomed.
+ */
+export function zoomWindowCovering(
+  a: number,
+  b: number,
+  margin = 5,
+  minHalfWidth = 17,
+): { from: number; to: number } {
+  const center = Math.round((a + b) / 2);
+  const halfWidth = Math.max(minHalfWidth, Math.ceil(Math.abs(a - b) / 2) + margin);
+  return zoomWindow(center, halfWidth);
+}
+
 export type Rarity = { side: "above" | "below"; outOf100: number };
 
 /**

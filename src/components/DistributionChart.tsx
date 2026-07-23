@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import countries from "../../data/countries.json";
-import { zoomWindow } from "@/lib/percentile";
+import { zoomWindowCovering } from "@/lib/percentile";
 import type { CountryData } from "@/lib/types";
 
 const countryList = countries as CountryData[];
@@ -81,11 +81,15 @@ export function DistributionChart({
 
   // Zoom crops the percentile (y) window; the income (x) domain is derived
   // from the endpoints of that same window so both axes tighten together.
-  const window = zoomed ? zoomWindow(globalPercentile) : { from: 0, to: 100 };
-  const yFrom = window.from;
-  const yTo = window.to;
-  const idxLo = zoomed ? window.from - 1 : 0;
-  const idxHi = zoomed ? window.to - 1 : 98;
+  // Covers both markers (global and country percentile) so neither one
+  // clips out of view when they're far apart.
+  const range = zoomed
+    ? zoomWindowCovering(globalPercentile, countryPercentile)
+    : { from: 0, to: 100 };
+  const yFrom = range.from;
+  const yTo = range.to;
+  const idxLo = zoomed ? range.from - 1 : 0;
+  const idxHi = zoomed ? range.to - 1 : 98;
 
   const lo =
     Math.min(
