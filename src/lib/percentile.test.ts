@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   formatMultiple,
+  fromIntlDollars,
+  incomeForPercentile,
   lookupPercentile,
   median,
   perCapita,
@@ -39,6 +41,50 @@ describe("소득 백분위 계산 코어", () => {
   it("중위값은_99개가_아닌_임계값_배열을_거부한다", () => {
     // 데이터 계약(99개)이 깨지면 조용한 오답 대신 즉시 실패해야 한다.
     expect(() => median([1, 2, 3])).toThrow(/99/);
+  });
+});
+
+describe("목표 백분위 도달에 필요한 소득 (역산)", () => {
+  const thresholds = Array.from({ length: 99 }, (_, i) => (i + 1) * 1000); // p1=1000 ... p99=99000
+
+  it("목표_백분위_인덱스의_임계값을_반환한다", () => {
+    expect(incomeForPercentile(50, thresholds)).toBe(thresholds[49]);
+    expect(incomeForPercentile(90, thresholds)).toBe(thresholds[89]);
+  });
+
+  it("1_미만은_1로_clamp한다", () => {
+    expect(incomeForPercentile(0, thresholds)).toBe(thresholds[0]);
+    expect(incomeForPercentile(-10, thresholds)).toBe(thresholds[0]);
+  });
+
+  it("99_초과는_99로_clamp한다", () => {
+    expect(incomeForPercentile(100, thresholds)).toBe(thresholds[98]);
+    expect(incomeForPercentile(150, thresholds)).toBe(thresholds[98]);
+  });
+
+  it("1에서_99까지_lookupPercentile과_왕복하면_원래_백분위로_돌아온다", () => {
+    // thresholds가 중복 없이 증가하는 한 >= 비교가 정확히 자기 자신 인덱스에서 멈춘다.
+    for (let p = 1; p <= 99; p++) {
+      expect(lookupPercentile(incomeForPercentile(p, thresholds), thresholds)).toBe(p);
+    }
+  });
+
+  it("범위_밖_입력은_clamp로_인해_왕복해도_원래_입력으로_돌아오지_않는다", () => {
+    // clamp는 손실이 있는 변환이라 완전한 역함수가 아니다 — 1과 99로 수렴한다.
+    expect(lookupPercentile(incomeForPercentile(0, thresholds), thresholds)).toBe(1);
+    expect(lookupPercentile(incomeForPercentile(200, thresholds), thresholds)).toBe(99);
+  });
+});
+
+describe("국제달러를 현지통화로 역환산", () => {
+  it("PPP_환산계수를_곱해_현지통화로_되돌린다", () => {
+    expect(fromIntlDollars(1, 1300)).toBe(1300);
+  });
+
+  it("toIntlDollars와_왕복하면_원래_금액으로_돌아온다", () => {
+    const amount = 45000;
+    const pppFactor = 1300;
+    expect(fromIntlDollars(toIntlDollars(amount, pppFactor), pppFactor)).toBeCloseTo(amount);
   });
 });
 

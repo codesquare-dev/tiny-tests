@@ -2,6 +2,11 @@ export function toIntlDollars(amount: number, pppFactor: number): number {
   return amount / pppFactor;
 }
 
+/** Inverse of {@link toIntlDollars} — converts international dollars back to local currency. */
+export function fromIntlDollars(intlAmount: number, pppFactor: number): number {
+  return intlAmount * pppFactor;
+}
+
 /**
  * Converts household income to per-capita income, matching the World Bank
  * PIP per-capita income distribution used for the percentile thresholds.
@@ -16,6 +21,16 @@ export function lookupPercentile(intlIncome: number, thresholds: number[]): numb
     if (intlIncome >= threshold) percentile = Math.min(i + 1, 99);
   });
   return percentile;
+}
+
+/**
+ * Inverse of {@link lookupPercentile} — the income threshold for a target percentile.
+ * Out-of-range targets clamp to 1..99, so round-tripping a clamped input through
+ * lookupPercentile does not return the original (out-of-range) value.
+ */
+export function incomeForPercentile(targetPercentile: number, thresholds: number[]): number {
+  const clamped = Math.min(99, Math.max(1, targetPercentile));
+  return thresholds[clamped - 1];
 }
 
 const THRESHOLD_COUNT = 99;

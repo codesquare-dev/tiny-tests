@@ -19,6 +19,9 @@ export type Verdict = {
   countryName: string;
   /** Per-capita yearly income in international dollars — the value both curves are read against. */
   intlIncome: number;
+  /** The raw household income as entered, in local currency before tax. */
+  rawIncome: number;
+  householdSize: number;
 };
 
 export function IncomeForm() {
@@ -70,6 +73,8 @@ export function IncomeForm() {
       countryCode: country.code,
       countryName: country.name,
       intlIncome: intl,
+      rawIncome: amount,
+      householdSize: household,
     });
   }
 

@@ -10,6 +10,7 @@ import { CountUp } from "./CountUp";
 import { DistributionChart } from "./DistributionChart";
 import type { Verdict } from "./IncomeForm";
 import { NextTests } from "./NextTests";
+import { PercentileTargets } from "./PercentileTargets";
 
 const countryList = countries as CountryData[];
 const globalData = global as GlobalData;
@@ -82,6 +83,15 @@ export function ResultCard({ verdict }: { verdict: Verdict }) {
           </dd>
         </div>
       </dl>
+
+      <PercentileTargets
+        globalPercentile={verdict.globalPercentile}
+        globalThresholds={globalData.percentiles}
+        pppFactor={country.pppFactor}
+        currency={country.currency}
+        householdSize={verdict.householdSize}
+        rawIncome={verdict.rawIncome}
+      />
 
       <div className="flex gap-3 pt-2">
         <a
