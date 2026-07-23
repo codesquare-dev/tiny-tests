@@ -11,6 +11,7 @@
   --color-rule-strong: #a9a292;
   --color-accent: #8c2333;
   --color-accent-deep: #71182a;
+  --color-compare: #3d6178;
 
   --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
   --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;

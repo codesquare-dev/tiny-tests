@@ -1,10 +1,16 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import countries from "../../data/countries.json";
+import { zoomWindow } from "@/lib/percentile";
+import type { CountryData } from "@/lib/types";
+
+const countryList = countries as CountryData[];
 
 type Props = {
   globalThresholds: number[];
   countryThresholds: number[];
   countryName: string;
+  countryCode: string;
   intlIncome: number;
   globalPercentile: number;
   countryPercentile: number;
@@ -47,11 +53,19 @@ export function DistributionChart({
   globalThresholds,
   countryThresholds,
   countryName,
+  countryCode,
   intlIncome,
   globalPercentile,
   countryPercentile,
 }: Props) {
   const [ref, width] = useMeasuredWidth();
+  const [compareCode, setCompareCode] = useState("");
+  const [zoomed, setZoomed] = useState(false);
+
+  const compareOptions = countryList.filter((c) => c.code !== countryCode);
+  const compareCountry = compareCode
+    ? countryList.find((c) => c.code === compareCode)
+    : undefined;
 
   const compact = width < 420;
   const height = compact ? 200 : 240;
@@ -65,12 +79,26 @@ export function DistributionChart({
   const plotWidth = Math.max(width - margin.left - margin.right, 1);
   const plotHeight = height - margin.top - margin.bottom;
 
+  // Zoom crops the percentile (y) window; the income (x) domain is derived
+  // from the endpoints of that same window so both axes tighten together.
+  const window = zoomed ? zoomWindow(globalPercentile) : { from: 0, to: 100 };
+  const yFrom = window.from;
+  const yTo = window.to;
+  const idxLo = zoomed ? window.from - 1 : 0;
+  const idxHi = zoomed ? window.to - 1 : 98;
+
   const lo =
-    Math.min(globalThresholds[0], countryThresholds[0], intlIncome) * 0.85;
+    Math.min(
+      globalThresholds[idxLo],
+      countryThresholds[idxLo],
+      compareCountry?.percentiles[idxLo] ?? Infinity,
+      intlIncome,
+    ) * 0.85;
   const hi =
     Math.max(
-      globalThresholds[98],
-      countryThresholds[98],
+      globalThresholds[idxHi],
+      countryThresholds[idxHi],
+      compareCountry?.percentiles[idxHi] ?? -Infinity,
       intlIncome,
     ) * 1.15;
 
@@ -79,7 +107,7 @@ export function DistributionChart({
   const x = (income: number) =>
     margin.left + ((Math.log10(income) - logLo) / (logHi - logLo)) * plotWidth;
   const y = (percentile: number) =>
-    margin.top + (1 - percentile / 100) * plotHeight;
+    margin.top + (1 - (percentile - yFrom) / (yTo - yFrom)) * plotHeight;
 
   const curve = (thresholds: number[]) =>
     thresholds
@@ -87,8 +115,12 @@ export function DistributionChart({
       .join(" ");
 
   const userX = x(intlIncome);
-  const baselineY = y(0);
+  const baselineY = y(yFrom);
   const labelAtEnd = userX > margin.left + plotWidth - 44;
+
+  const gridlinePercentiles = zoomed
+    ? [yFrom, Math.round((yFrom + yTo) / 2), yTo]
+    : [0, 50, 100];
 
   return (
     <figure className="mt-6">
@@ -96,6 +128,33 @@ export function DistributionChart({
         Share of people earning less, by yearly income per person (int$, log
         scale)
       </figcaption>
+
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+        <label className="flex items-center gap-2 text-ink-muted">
+          Compare with
+          <select
+            className="field w-auto py-1.5"
+            value={compareCode}
+            onChange={(e) => setCompareCode(e.target.value)}
+          >
+            <option value="">another country…</option>
+            {compareOptions.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          onClick={() => setZoomed((z) => !z)}
+          className="rounded-sm border border-rule-strong px-3 py-1.5 text-xs font-medium hover:border-ink"
+          aria-pressed={zoomed}
+        >
+          {zoomed ? "Show full range" : "Zoom to your range"}
+        </button>
+      </div>
+
       <div ref={ref} className="mt-3">
         {width > 0 && (
           <svg
@@ -106,7 +165,7 @@ export function DistributionChart({
             aria-label={`Income distribution curves. You earn ${Math.round(intlIncome).toLocaleString("en-US")} international dollars per person per year, above ${globalPercentile}% of the world and ${countryPercentile}% of people in ${countryName}.`}
           >
             {/* Percentile gridlines — hairline, solid, recessive. */}
-            {[0, 50, 100].map((p) => (
+            {gridlinePercentiles.map((p) => (
               <g key={p}>
                 <line
                   x1={margin.left}
@@ -156,6 +215,16 @@ export function DistributionChart({
             />
 
             {/* Context first, story on top. */}
+            {compareCountry && (
+              <path
+                d={curve(compareCountry.percentiles)}
+                fill="none"
+                stroke="var(--color-compare)"
+                strokeWidth={2}
+                strokeLinejoin="round"
+                strokeLinecap="round"
+              />
+            )}
             <path
               d={curve(countryThresholds)}
               fill="none"
@@ -215,7 +284,7 @@ export function DistributionChart({
         {width === 0 && <div style={{ height }} />}
       </div>
 
-      {/* Two series → a legend is always present. */}
+      {/* A legend is always present; a third entry appears once a compare country is picked. */}
       <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-ink-muted">
         <span className="flex items-center gap-2">
           <span aria-hidden className="inline-block h-0.5 w-4 bg-ink" />
@@ -225,6 +294,12 @@ export function DistributionChart({
           <span aria-hidden className="inline-block h-0.5 w-4 bg-ink-muted" />
           {countryName}
         </span>
+        {compareCountry && (
+          <span className="flex items-center gap-2">
+            <span aria-hidden className="inline-block h-0.5 w-4 bg-compare" />
+            {compareCountry.name}
+          </span>
+        )}
       </div>
     </figure>
   );

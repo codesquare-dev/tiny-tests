@@ -58,6 +58,7 @@ export function ResultCard({ verdict }: { verdict: Verdict }) {
         globalThresholds={globalData.percentiles}
         countryThresholds={country.percentiles}
         countryName={verdict.countryName}
+        countryCode={verdict.countryCode}
         intlIncome={verdict.intlIncome}
         globalPercentile={verdict.globalPercentile}
         countryPercentile={verdict.countryPercentile}

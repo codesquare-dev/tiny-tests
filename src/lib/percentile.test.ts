@@ -8,6 +8,7 @@ import {
   perCapita,
   rarityOutOf100,
   toIntlDollars,
+  zoomWindow,
 } from "./percentile";
 
 describe("소득 백분위 계산 코어", () => {
@@ -101,6 +102,30 @@ describe("중위 대비 배수 표기", () => {
   it("0_1배_미만은_0_0배_대신_미만으로_표기한다", () => {
     // 반올림하면 "0.0×"가 되어 소득이 0인 것처럼 읽힌다.
     expect(formatMultiple(0.04)).toBe("<0.1×");
+  });
+});
+
+describe("차트 확대 범위 (중심 백분위 ± 폭)", () => {
+  it("범위_안쪽_중심은_대칭으로_좌우_동일폭을_잡는다", () => {
+    expect(zoomWindow(50, 17)).toEqual({ from: 33, to: 67 });
+  });
+
+  it("중심이_상단_경계에_가까우면_창_전체를_안쪽으로_밀어_폭을_유지한다", () => {
+    // center=99, halfWidth=17이면 [82,116]인데 99를 넘으니 왼쪽으로 밀어 [65,99]가 된다.
+    expect(zoomWindow(99, 17)).toEqual({ from: 65, to: 99 });
+  });
+
+  it("중심이_하단_경계에_가까우면_창_전체를_안쪽으로_밀어_폭을_유지한다", () => {
+    expect(zoomWindow(1, 17)).toEqual({ from: 1, to: 35 });
+  });
+
+  it("중심_백분위는_1_99로_clamp한다", () => {
+    expect(zoomWindow(150, 17)).toEqual(zoomWindow(99, 17));
+    expect(zoomWindow(-5, 17)).toEqual(zoomWindow(1, 17));
+  });
+
+  it("기본_폭은_17이다", () => {
+    expect(zoomWindow(50)).toEqual({ from: 33, to: 67 });
   });
 });
 

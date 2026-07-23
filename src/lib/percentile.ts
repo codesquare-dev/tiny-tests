@@ -49,6 +49,30 @@ export function formatMultiple(value: number): string {
   return `${value.toFixed(1)}×`;
 }
 
+/**
+ * A percentile window centered on `centerPercentile`, clamped into 1..99.
+ * Near an edge the whole window shifts inward instead of shrinking, so the
+ * width stays constant (2 * halfWidth) regardless of where the center falls.
+ * Used to "zoom" the distribution chart to the range near a user's position.
+ */
+export function zoomWindow(
+  centerPercentile: number,
+  halfWidth = 17,
+): { from: number; to: number } {
+  const center = Math.min(99, Math.max(1, centerPercentile));
+  let from = center - halfWidth;
+  let to = center + halfWidth;
+  if (from < 1) {
+    to += 1 - from;
+    from = 1;
+  }
+  if (to > 99) {
+    from -= to - 99;
+    to = 99;
+  }
+  return { from: Math.max(1, from), to: Math.min(99, to) };
+}
+
 export type Rarity = { side: "above" | "below"; outOf100: number };
 
 /**
